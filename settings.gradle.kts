@@ -1,1 +1,2 @@
-rootProject.name = "kotlin-api-skeleton"
+rootProject.name = "piggy-bank"
+include("contexts:api")
