@@ -51,9 +51,9 @@ data class Moneybox(
                 name = MoneyboxName("Your Piggy Bank"),
                 month = now.month,
                 year = MoneyboxYear(now.year),
-                funds = MoneyboxFunds(0.0),
+                funds = MoneyboxFunds(1000.0),
                 salary = MoneyboxSalary(50.0),
-                saved = MoneyboxSaved(0.0),
+                saved = MoneyboxSaved(10.0),
                 spent = MoneyboxSpent(0.0)
             )
         }

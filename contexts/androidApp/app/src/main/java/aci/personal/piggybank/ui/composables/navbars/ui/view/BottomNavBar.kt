@@ -1,6 +1,6 @@
 package aci.personal.piggybank.ui.composables.navbars.ui.view
 
-import aci.personal.piggybank.routes.BottomNavBarItem
+import aci.personal.piggybank.routes.NavRoute
 import aci.personal.piggybank.ui.composables.navbars.data.BottomBarItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -24,14 +24,14 @@ import androidx.navigation.NavController
 fun BottomNavBar(navController: NavController) {
     val bottomNavBarItems = listOf(
         BottomBarItem(
-            route = BottomNavBarItem.Home.baseRoute,
+            route = NavRoute.Home.baseRoute,
             title = "Home",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
             hasNews = false
         ),
         BottomBarItem(
-            route = BottomNavBarItem.Moneyboxes.baseRoute,
+            route = NavRoute.Moneyboxes.baseRoute,
             title = "Budget",
             selectedIcon = Icons.Filled.Edit,
             unselectedIcon = Icons.Outlined.Edit,
@@ -39,14 +39,14 @@ fun BottomNavBar(navController: NavController) {
             badgeCount = 20
         ),
         BottomBarItem(
-            route = BottomNavBarItem.User.baseRoute,
+            route = NavRoute.User.baseRoute,
             title = "Calendar",
             selectedIcon = Icons.Filled.DateRange,
             unselectedIcon = Icons.Outlined.DateRange,
             hasNews = false
         ),
         BottomBarItem(
-            route = BottomNavBarItem.Settings.baseRoute,
+            route = NavRoute.Settings.baseRoute,
             title = "Settings",
             selectedIcon = Icons.Filled.Settings,
             unselectedIcon = Icons.Outlined.Settings,
@@ -58,16 +58,20 @@ fun BottomNavBar(navController: NavController) {
         mutableStateOf(0)
     }
 
-    NavigationBar() {
+    NavigationBar {
         bottomNavBarItems.forEachIndexed { index, item ->
             NavigationBarItem(
                 selected = selectedItemIndex == index,
                 onClick = {
                     selectedItemIndex = index
-                    navController.navigate(item.route)
+                    navController.navigate(route = item.route)
                 },
                 label = {
-                    Text(text = item.title)
+                    Text(
+                        text = item.title,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
                 },
                 alwaysShowLabel = true,
                 icon = {

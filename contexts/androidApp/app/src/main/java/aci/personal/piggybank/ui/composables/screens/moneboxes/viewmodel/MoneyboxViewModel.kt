@@ -25,6 +25,9 @@ class MoneyboxViewModel @Inject constructor(
     private val _moneyboxes = MutableStateFlow<List<Moneybox>>(listOf())
     val moneyboxes = _moneyboxes.asStateFlow()
 
+    private val _selectedMoneybox = MutableStateFlow<Moneybox?>(null)
+    val selectedMoneybox = _selectedMoneybox.asStateFlow()
+
     init {
         viewModelScope.launch {
             val now = LocalDateTime.now()
@@ -38,12 +41,19 @@ class MoneyboxViewModel @Inject constructor(
 
             if (result.isNotEmpty()) {
                 _moneyboxes.value = result
+                _selectedMoneybox.value = result[0]
             } else {
                 val moneybox = Moneybox.default()
 
                 insertMoneyboxesUseCase(moneyboxes = listOf(moneybox))
                 _moneyboxes.value = listOf(moneybox)
+                _selectedMoneybox.value = moneybox
             }
         }
+    }
+
+    fun selectMoneybox(id: UUID): Moneybox? {
+        _selectedMoneybox.value = _moneyboxes.value.first { it.id == id }
+        return _selectedMoneybox.value
     }
 }
